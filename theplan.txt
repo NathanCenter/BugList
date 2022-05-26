@@ -1,0 +1,9 @@
+get firebase ready>
+get vs file ready>
+get .gitigonor ready>
+get the database ready>
+
+Get the sql files ready and the datebase to firebase ready.>
+
+upload first code to github>
+have fire base set up in the set up file and ask jury how he did it.
