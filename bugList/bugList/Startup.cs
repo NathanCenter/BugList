@@ -1,3 +1,5 @@
+using bugList.Auth;
+using bugList.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +27,8 @@ namespace bugList
         {
             services.AddControllersWithViews();
             services.AddHttpClient();
-            //services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
+            //services.AddTransient<I, UserProfileRepository>();
+            services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
