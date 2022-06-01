@@ -1,5 +1,7 @@
 ﻿using bugList.Auth.Models;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -15,16 +17,49 @@ namespace bugList.Auth
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _firebaseApiKey;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
-        public Task<FirebaseUser> Login(Credentials credentials)
+        public FirebaseAuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        {
+            _httpClientFactory = httpClientFactory;
+            _firebaseApiKey = configuration.GetValue<string>("FirebaseApiKey");
+            _jsonSerializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+        }
+        // See firebase documentation for more information
+        //  https://firebase.google.com/docs/reference/rest/auth/#section-sign-in-email-password
+        public async Task<FirebaseUser> Login(Credentials credentials)
         {
             var url = FIREBASE_SIGN_IN_BASE_URL + _firebaseApiKey;
-            //return await SignUpOrSignIn(credentials.Email, credentials.Password, url);
-            throw new System.NotImplementedException();
+            return await SignUpOrSignIn(credentials.Email, credentials.Password, url);
+        }
+        public async Task<FirebaseUser> Register(Registration registration)
+        {
+            var url = FIREBASE_SIGN_UP_BASE_URL + _firebaseApiKey;
+            return await SignUpOrSignIn(registration.Email, registration.Password, url);
         }
 
-        public Task<FirebaseUser> Register(Registration registration)
+        private async Task<FirebaseUser> SignUpOrSignIn(string email, string password, string url)
         {
-            throw new System.NotImplementedException();
+            var firebaseRequest = new FirebaseRequest(email, password);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Content = new StringContent(
+                JsonSerializer.Serialize(firebaseRequest, _jsonSerializerOptions),
+                Encoding.UTF8,
+                "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+
+            var content = await response.Content.ReadAsStringAsync();
+            var firebaseResponse =
+                JsonSerializer.Deserialize<FirebaseResponse>(content, _jsonSerializerOptions);
+
+            return firebaseResponse.LocalId != null
+                ? new FirebaseUser(firebaseResponse.Email, firebaseResponse.LocalId)
+                : null;
         }
+
     }
 }

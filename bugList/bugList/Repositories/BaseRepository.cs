@@ -18,4 +18,5 @@ namespace bugList.Repositories
                 return new SqlConnection(_connectionString);
             }
         }
+    }
 }

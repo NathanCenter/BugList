@@ -2,7 +2,7 @@
 
 namespace bugList.Auth.Models
 {
-    public class Credentails
+    public class Credentials
     {
 
         [Required]
