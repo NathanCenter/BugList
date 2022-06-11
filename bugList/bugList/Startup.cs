@@ -27,7 +27,7 @@ namespace bugList
         {
             services.AddControllersWithViews();
             services.AddHttpClient();
-            //services.AddTransient<I, UserProfileRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
         }
 

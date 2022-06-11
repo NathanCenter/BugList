@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace bugList.Repositories
 {
-    public interface IUserProfileReposity
+    public interface IUserProfileRepository
     {
         void Add(UserProfile userProfile);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
