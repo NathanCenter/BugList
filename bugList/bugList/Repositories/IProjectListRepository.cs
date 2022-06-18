@@ -1,6 +1,11 @@
-﻿namespace bugList.Repositories
+﻿using bugList.Models;
+using System.Collections.Generic;
+
+namespace bugList.Repositories
 {
-    public class IProjectListRepository
+    public interface IProjectListRepository
     {
+         List<ProjectList> GetAllProjects();
+
     }
 }

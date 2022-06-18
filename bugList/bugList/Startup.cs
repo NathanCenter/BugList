@@ -29,6 +29,7 @@ namespace bugList
             services.AddHttpClient();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
+            services.AddTransient<IProjectListRepository, ProjectListRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +56,7 @@ namespace bugList
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=ProjectList}/{action=Index}/{id?}");
             });
         }
     }
