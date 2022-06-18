@@ -8,4 +8,6 @@ Get the sql files ready and the datebase to firebase ready.>
 upload first code to github>
 have fire base set up in the set up file and ask jury how he did it.>
 	finish up the set up for firebase
-Have the first bug list on the controller and the view.
+Have the first bug list on the controller and the view.>
+
+Work on the log in on the userprofile repository 
