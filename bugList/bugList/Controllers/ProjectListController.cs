@@ -10,10 +10,14 @@ namespace bugList.Controllers
     {
         // GET: ProjectListController
         private readonly IProjectListRepository _projectListRepository;
+        private readonly IBugRepository _bugRepository;
 
-        public ProjectListController(IProjectListRepository projectListRepository) {
+   
+        public ProjectListController(IProjectListRepository projectListRepository,IBugRepository bugRepository) {
             _projectListRepository = projectListRepository;
+            _bugRepository = bugRepository;
         }
+       
         public ActionResult Index()
         {
             List<ProjectList> projects = _projectListRepository.GetAllProjects();
@@ -23,7 +27,14 @@ namespace bugList.Controllers
         // GET: ProjectListController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Bug bug = _bugRepository.GetBugsByProjectId(id);
+
+            if (bug == null)
+            {
+                return NotFound();
+            }
+
+            return View(bug);
         }
 
         // GET: ProjectListController/Create

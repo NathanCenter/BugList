@@ -30,6 +30,7 @@ namespace bugList
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
             services.AddTransient<IProjectListRepository, ProjectListRepository>();
+            services.AddTransient<IBugRepository, BugRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
