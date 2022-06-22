@@ -1,11 +1,11 @@
-﻿@model IEnumerable<bugList.Models.ProjectList>
+﻿@model IEnumerable<bugList.Models.Bug>
 
 @{
-    ViewData["Title"] = "ProjectListPage";
-
+    ViewData["Title"] = "Index";
 }
 
-<h1>ProjectListPage</h1>
+<h1>Index</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -16,13 +16,16 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserProfileId)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProgrammingLangueage)
+                @Html.DisplayNameFor(model => model.Line)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
+                @Html.DisplayNameFor(model => model.Solved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.projectId)
             </th>
             <th></th>
         </tr>
@@ -34,23 +37,23 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserProfileId)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProgrammingLangueage)
+                @Html.DisplayFor(modelItem => item.Line)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
+                @Html.DisplayFor(modelItem => item.Solved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.projectId)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id   }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                
             </td>
-           
         </tr>
-         
 }
     </tbody>
 </table>

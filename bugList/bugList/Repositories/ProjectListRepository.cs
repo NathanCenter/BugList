@@ -32,13 +32,14 @@ namespace bugList.Repositories
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<ProjectList> projects = new List<ProjectList>();
-                        while (reader.Read()) {
+                        while (reader.Read())
+                        {
                             ProjectList project = new ProjectList
                             {
-                                Id =DbUtils.GetInt(reader, "id"),
-                                UserProfileId =DbUtils.GetInt(reader, "UserProfileId"),
+                                Id = DbUtils.GetInt(reader, "id"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
                                 ProgrammingLangueage = DbUtils.GetString(reader, "ProgrammingLanguage"),
-                                ProjectName =DbUtils.GetString(reader, "projectName"),
+                                ProjectName = DbUtils.GetString(reader, "projectName"),
                             };
                             projects.Add(project);
                         }
@@ -48,6 +49,41 @@ namespace bugList.Repositories
 
 
             }
+        }
+        public ProjectList GetProjectById(int id)
+        {
+
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Select Id,UserProfileId,ProgrammingLanguage,projectName from ProjectList
+                        where id=@id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            ProjectList project = new ProjectList
+                            {
+                                Id = DbUtils.GetInt(reader, "id"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                                ProgrammingLangueage = DbUtils.GetString(reader, "ProgrammingLanguage"),
+                                ProjectName = DbUtils.GetString(reader, "projectName"),
+
+                            };
+                            return project;
+                        }
+                        else 
+                        {
+                            return null;
+                        }
+                    }
+
+                }
+            }
+
         }
     }
 }
