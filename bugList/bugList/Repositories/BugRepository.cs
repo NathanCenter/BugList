@@ -40,7 +40,7 @@ namespace bugList.Repositories
                                 projectId = DbUtils.GetInt(reader, "projectId"),
                                 Description = DbUtils.GetString(reader, "description"),
                                 Line = DbUtils.GetString(reader, "line"),
-                                Solved= DbUtils.GetString(reader, "Sovled"),
+                                Solved = DbUtils.GetString(reader, "Sovled"),
 
                             };
                             bug.Add(bugList);
@@ -53,8 +53,9 @@ namespace bugList.Repositories
 
         }
 
-        public Bug GetBugsByProjectId(int id)
+        public List<Bug> GetBugsByProjectId(int id)
         {
+
             using (var conn = Connection)
             {
                 conn.Open();
@@ -65,26 +66,26 @@ where b.projectId=@Id";
                     cmd.Parameters.AddWithValue("@Id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.Read()) 
+
+                        List<Bug> bugDetails = new List<Bug>();
+                        while (reader.Read())
                         {
-                            Bug bugDetails = new Bug
+                            Bug bugList = new Bug()
                             {
                                 Id = DbUtils.GetInt(reader, "id"),
                                 projectId = DbUtils.GetInt(reader, "projectId"),
                                 Description = DbUtils.GetString(reader, "description"),
                                 Line = DbUtils.GetString(reader, "line"),
                                 Solved = DbUtils.GetString(reader, "Sovled"),
-                            };
-                            return bugDetails;
-                        }
-                        else
-                        {
-                            return null;
-                        }
-                    }
 
+                            };
+                            bugDetails.Add(bugList);
+                        }
+                        return bugDetails;
+                    }
                 }
             }
         }
     }
 }
+  

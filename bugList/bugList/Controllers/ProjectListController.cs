@@ -27,14 +27,14 @@ namespace bugList.Controllers
         // GET: ProjectListController/Details/5
         public ActionResult Details(int id)
         {
-            Bug bug = _bugRepository.GetBugsByProjectId(id);
+            List<Bug> bugDetials=_bugRepository.GetBugsByProjectId(id);
 
-            if (bug == null)
+            if (bugDetials == null)
             {
                 return NotFound();
             }
 
-            return View(bug);
+            return View(bugDetials);
         }
 
         // GET: ProjectListController/Create
@@ -46,15 +46,16 @@ namespace bugList.Controllers
         // POST: ProjectListController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ProjectList project)
         {
             try
             {
+                _projectListRepository.CreateProject(project);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(project);
             }
         }
 

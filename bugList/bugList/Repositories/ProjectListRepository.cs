@@ -83,7 +83,36 @@ namespace bugList.Repositories
 
                 }
             }
+            
+         }
+        //create a project https://github.com/nashville-software-school/bangazon-inc/blob/main/book-2-mvc/chapters/ADD_AND_UPDATE_DATA_IN_MVC.md 
+        //Insert Into ProjectList (Id,UserProfileId,ProgrammingLanguage,ProjectName)  OUTPUT INSERTED.ID VALUES (4,1,'c#','test')
+        public void  CreateProject(ProjectList project)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Insert Into ProjectList ([Id],UserProfileId,ProgrammingLanguage,ProjectName) 
+            OUTPUT INSERTED.ID VALUES (@Id,@UserProfileId,@ProgrammingLanguage,@ProjectName)";
 
+                    cmd.Parameters.AddWithValue("@Id", project.Id);
+                    cmd.Parameters.AddWithValue("@UserProfileId", project.UserProfileId);
+                    cmd.Parameters.AddWithValue("@ProgrammingLanguage", project.ProgrammingLangueage);
+                    cmd.Parameters.AddWithValue("@ProjectName", project.ProjectName);
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    project.Id = id;
+
+                }
+
+
+
+            }
         }
+
+
     }
 }
