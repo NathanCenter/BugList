@@ -7,5 +7,7 @@ namespace bugList.Repositories
     {
          List<ProjectList> GetAllProjects();
         public ProjectList GetProjectById(int id);
+
+        public void CreateProject(ProjectList project);
     }
 }

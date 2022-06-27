@@ -6,7 +6,7 @@ namespace bugList.Repositories
     public interface IBugRepository
     {
         List<Bug> GetAllBugs();
-        public Bug GetBugsByProjectId(int id);
+        List<Bug> GetBugsByProjectId(int id);
         
     }
 }
