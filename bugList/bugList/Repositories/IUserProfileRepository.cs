@@ -9,7 +9,7 @@ namespace bugList.Repositories
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         UserProfile GetById(int id);
         List<UserProfile> GetAll();
-        void Delete(int id);
+     
         void Edit(UserProfile userProfile);
     }
 }
