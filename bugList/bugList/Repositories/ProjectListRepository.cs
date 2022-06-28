@@ -111,6 +111,26 @@ namespace bugList.Repositories
 
 
             }
+           
+        }
+        public void Delete(int projectId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand()) 
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM 
+                            ProjectList
+                            WHERE Id = @id
+                        ";
+                    cmd.Parameters.AddWithValue("@id", projectId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            
+            }
         }
 
 

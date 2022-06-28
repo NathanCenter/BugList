@@ -9,5 +9,7 @@ namespace bugList.Repositories
         public ProjectList GetProjectById(int id);
 
         public void CreateProject(ProjectList project);
+
+        public void Delete(int id);
     }
 }

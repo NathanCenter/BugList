@@ -2,6 +2,7 @@
 using bugList.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace bugList.Controllers
@@ -83,21 +84,23 @@ namespace bugList.Controllers
         // GET: ProjectListController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            ProjectList projects = _projectListRepository.GetProjectById(id);
+            return View(projects);
         }
 
         // POST: ProjectListController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, ProjectList project)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _projectListRepository.Delete(id);
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(project);
             }
         }
     }
