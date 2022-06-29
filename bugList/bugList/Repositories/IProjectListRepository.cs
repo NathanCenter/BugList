@@ -11,5 +11,6 @@ namespace bugList.Repositories
         public void CreateProject(ProjectList project);
 
         public void Delete(int id);
+        public void Edit(ProjectList project);
     }
 }

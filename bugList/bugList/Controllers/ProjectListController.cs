@@ -63,21 +63,27 @@ namespace bugList.Controllers
         // GET: ProjectListController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ProjectList project = _projectListRepository.GetProjectById(id); 
+            if(project == null)
+            {
+                return NotFound();
+            }
+            return View(project);
         }
 
         // POST: ProjectListController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, ProjectList project)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _projectListRepository.Edit(project);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(project);
             }
         }
 
