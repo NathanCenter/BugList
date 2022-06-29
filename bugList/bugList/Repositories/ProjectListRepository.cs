@@ -132,6 +132,26 @@ namespace bugList.Repositories
             
             }
         }
+        //edit project list
+        //Update ProjectList Set ProgrammingLanguage='@ProgrammingLanguage', ProjectName='ProjectName'
+        //Where Id = '@Id'
+        public void Edit(ProjectList project)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update ProjectList Set ProgrammingLanguage=@ProgrammingLanguage, ProjectName=@ProjectName
+                Where Id = @Id";
+                    cmd.Parameters.AddWithValue("@ProgrammingLanguage", project.ProgrammingLangueage);
+                    cmd.Parameters.AddWithValue("@ProjectName", project.ProjectName);
+                    cmd.Parameters.AddWithValue("@Id", project.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
 
     }
