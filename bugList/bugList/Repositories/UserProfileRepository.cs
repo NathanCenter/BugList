@@ -21,9 +21,53 @@ namespace bugList.Repositories
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
-        public void Add(UserProfile userProfile)
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
-            throw new System.NotImplementedException();
+
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Select Id, Name,Email,FirebaseUserId,userType from UserProfile 
+               WHERE FirebaseUserId = @FirebaseuserId";
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+                    UserProfile userProfile = null;
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read()) {
+                        userProfile = new UserProfile()
+                        {
+                            Id=DbUtils.GetInt(reader, "Id"),
+                            Name=DbUtils.GetString(reader, "Name"),
+                            Email=DbUtils.GetString(reader, "Email"),  
+                            UserType=DbUtils.GetString(reader, "userType"),
+                            FirebaseId = DbUtils.GetString(reader, "FirebaseUserId")
+                        };
+                    }
+                    reader.Close();
+                    return userProfile;
+                }
+
+            }
+        }
+
+        public void Add(UserProfile userProfile,string localId)
+        {
+            using (var conn = Connection) 
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO UserProfile (Name,FirebaseUserId,UserType,Email)  OUTPUT INSERTED.Id VALUES (@Name,@FirebaseUserId,@UserType,@Email)";
+
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", localId);
+                    DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
+                    DbUtils.AddParameter(cmd, "@UserType", userProfile.UserType);
+                    DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
+                    userProfile.Id = (int)cmd.ExecuteScalar();
+                }
+
+            }
         }
 
         public void Delete(int id)
@@ -64,10 +108,7 @@ namespace bugList.Repositories
             }
         }
 
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
-        {
-            throw new System.NotImplementedException();
-        }
+    
 
         public UserProfile GetById(int id)
         {
@@ -84,11 +125,11 @@ namespace bugList.Repositories
                     {
                         userProfile = new UserProfile()
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                           // Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Email=reader.GetString(reader.GetOrdinal("Email")),
-                            FirebaseId=reader.GetString(reader.GetOrdinal("FirbaseUserId")),
+                           // FirebaseId=reader.GetString(reader.GetOrdinal("FirbaseUserId")),
                             Name=reader.GetString(reader.GetOrdinal("Name")),
-                            UserType = reader.GetString(reader.GetOrdinal("UserType")),
+                            //UserType = reader.GetString(reader.GetOrdinal("UserType")),
                         };
                     }
                     reader.Close();
