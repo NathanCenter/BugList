@@ -5,7 +5,7 @@ namespace bugList.Repositories
 {
     public interface IUserProfileRepository
     {
-        void Add(UserProfile userProfile);
+        void Add(UserProfile userProfile,string localId);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         UserProfile GetById(int id);
         List<UserProfile> GetAll();

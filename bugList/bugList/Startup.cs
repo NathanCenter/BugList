@@ -25,7 +25,10 @@ namespace bugList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+          
+            services.AddControllersWithViews(); 
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession();
             services.AddHttpClient();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
@@ -48,7 +51,7 @@ namespace bugList
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -57,7 +60,7 @@ namespace bugList
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ProjectList}/{action=Index}/{id?}");
+                    pattern: "{controller=UserProfile}/{action=SignIn}/{id?}");
             });
         }
     }
