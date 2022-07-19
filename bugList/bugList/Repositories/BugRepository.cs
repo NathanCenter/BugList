@@ -28,7 +28,7 @@ namespace bugList.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select b.projectId,b.id,b.Description,b.Sovled,b.line from Bug b left join BugType BT on b.BugTypeId =BT.id";
+                    cmd.CommandText = @"Select b.projectId,b.id,b.Description,b.Sovled,b.line,Bt.BugType from Bug b left join BugType BT on b.BugTypeId =BT.id";
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<Bug> bug = new List<Bug>();
@@ -43,6 +43,13 @@ namespace bugList.Repositories
                                 Solved = DbUtils.GetString(reader, "Sovled"),
 
                             };
+                            BugType bugType = new BugType() 
+                            {
+                                Id = DbUtils.GetInt(reader, "id"),
+                                bugType=DbUtils.GetString(reader, "bugType"),
+
+                            };
+
                             bug.Add(bugList);
                         }
                         return bug;
@@ -61,8 +68,8 @@ namespace bugList.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select b.id,b.projectId,b.Description,b.Sovled,b.line from Bug b left join BugType BT on b.BugTypeId =BT.id
-where b.projectId=@Id";
+                    cmd.CommandText = @"Select b.id,b.projectId,b.Description,b.Sovled,b.line,BT.BugType from Bug b left join BugType BT on b.BugTypeId =BT.id
+where b.projectId=@id";
                     cmd.Parameters.AddWithValue("@Id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -77,12 +84,42 @@ where b.projectId=@Id";
                                 Description = DbUtils.GetString(reader, "description"),
                                 Line = DbUtils.GetString(reader, "line"),
                                 Solved = DbUtils.GetString(reader, "Sovled"),
+                            BugType= new BugType() 
+                                {
+                                    Id = DbUtils.GetInt(reader, "id"),
+                                    bugType = DbUtils.GetString(reader, "BugType"),
+                                }
 
                             };
+                       
                             bugDetails.Add(bugList);
                         }
                         return bugDetails;
                     }
+                }
+            }
+        }
+
+     
+        public void CreateBug(Bug bug)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Insert Into Bug (Description,Line,projectId,BugTypeId,Sovled) OUTPUT INSERTED.ID VALUES
+(@Description,@line,@projectId,@BugTypeId,@Sovled)";
+                    
+                    DbUtils.AddParameter(cmd,"@Description", bug.Description);
+                    DbUtils.AddParameter(cmd, "@line", bug.Line);
+                    DbUtils.AddParameter(cmd, "@projectId", bug.projectId);
+                    DbUtils.AddParameter(cmd, "@BugTypeId", bug.BugType.Id);
+                    DbUtils.AddParameter(cmd, "@Sovled", bug.Solved);
+                    int id = (int)cmd.ExecuteScalar();
+
+                    bug.Id = id;
+
                 }
             }
         }

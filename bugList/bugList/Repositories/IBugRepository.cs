@@ -7,6 +7,8 @@ namespace bugList.Repositories
     {
         List<Bug> GetAllBugs();
         List<Bug> GetBugsByProjectId(int id);
-        
+        public void CreateBug(Bug bug);
+
+
     }
 }

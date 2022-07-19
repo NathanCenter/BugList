@@ -7,6 +7,10 @@
         public string Line { get; set; }
         public string Solved { get; set; }
         public int projectId { get; set; }
+        public BugType BugType { get; set; }
+       
+       
 
     }
+   
 }
