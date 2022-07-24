@@ -20,6 +20,7 @@ namespace bugList.Auth
                            new FirebaseConfig("AIzaSyCbhyotYFGag5vCve17fHTqqxGsPQSpLU8"));
         }
         // GET: UserProfileController
+        //log in page
 
         //https://arno-waegemans.medium.com/firebase-authentication-for-asp-net-core-mvc-defd6135c632
 
@@ -58,7 +59,7 @@ namespace bugList.Auth
                 
 
                 return RedirectToAction("Index", "ProjectList");
-               ;
+               
             }
             else
             {

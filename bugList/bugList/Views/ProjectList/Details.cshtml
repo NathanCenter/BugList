@@ -7,7 +7,10 @@
 <h1>Details</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <p>
+
+    <button onclick="location.href='@Url.Action("Create", "Bug")'">Create New</button>
+</p>
 </p>
 <table class="table">
     <thead>
@@ -24,8 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Solved)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.projectId)
+          
+             <th>
+                @Html.DisplayNameFor(model => model.BugType)
             </th>
             <th></th>
         </tr>
@@ -45,13 +49,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Solved)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.projectId)
+            
+             <td>
+                
+                @Html.DisplayFor(modelItem => item.BugType.bugType)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+               @Html.ActionLink("Edit", "Edit","Bug", new {  id=item.Id  }) |
+               @Html.ActionLink("Delete","Delete","Bug", new { id=item.Id })
             </td>
         </tr>
 }
