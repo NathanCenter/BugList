@@ -131,9 +131,7 @@ namespace bugList.Repositories
             
             }
         }
-        //edit project list
-        //Update ProjectList Set ProgrammingLanguage='@ProgrammingLanguage', ProjectName='ProjectName'
-        //Where Id = '@Id'
+        
         public void Edit(ProjectList project)
         {
             using (SqlConnection conn = Connection)

@@ -1,19 +1,22 @@
 ﻿@model bugList.Models.Bug
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>Bug</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            
+            <div class="form-group">
+                
+                <input asp-for="Id" class="form-control" type="hidden" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -30,17 +33,11 @@
                 <span asp-validation-for="Solved" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="projectId" class="control-label"></label>
-                <select asp-for="projectId" >
-                    <option value="1">buglist </option>
-                    <option value="2">pizza app</option>
-                     <option value="3">calculator</option>
-                      <option value="4">qr code poll</option>
-                        </select>
+                
+                <input asp-for="projectId" class="form-control" type="hidden" />
+                <span asp-validation-for="projectId" class="text-danger"></span>
             </div>
-      
-    
-             <div class="form-group">
+              <div class="form-group">
                
                 <label asp-for="BugType" class="control-label"></label>
                 <select asp-for="BugType.Id" >
@@ -53,12 +50,13 @@
                 <span asp-validation-for="BugType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                         <input type='submit' value='Cancel' name='action'onclick="location.href='@Url.Action("Index", "ProjectList")'" />
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="cancel" onclick="location.href='@Url.Action("Index", "ProjectList")'" />
             </div>
         </form>
     </div>
 </div>
+
 
 
 @section Scripts {

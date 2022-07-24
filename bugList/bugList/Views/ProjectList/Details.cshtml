@@ -55,8 +55,8 @@
                 @Html.DisplayFor(modelItem => item.BugType.bugType)
             </td>
             <td>
-               @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
-               @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+               @Html.ActionLink("Edit", "Edit","Bug", new {  id=item.Id  }) |
+               @Html.ActionLink("Delete","Delete","Bug", new { id=item.Id })
             </td>
         </tr>
 }
