@@ -31,7 +31,7 @@ namespace bugList
             services.AddSession();
             services.AddHttpClient();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
-            services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
+           
             services.AddTransient<IProjectListRepository, ProjectListRepository>();
             services.AddTransient<IBugRepository, BugRepository>();
         }
