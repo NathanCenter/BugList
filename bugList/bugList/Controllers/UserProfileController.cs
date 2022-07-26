@@ -22,8 +22,6 @@ namespace bugList.Auth
         // GET: UserProfileController
         //log in page
 
-        //https://arno-waegemans.medium.com/firebase-authentication-for-asp-net-core-mvc-defd6135c632
-
         public IActionResult LogOut()
         {
             HttpContext.Session.Remove("_UserToken");
