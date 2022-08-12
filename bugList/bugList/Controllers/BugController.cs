@@ -10,10 +10,15 @@ namespace bugList.Controllers
     {
         // GET: BugController
         private readonly IBugRepository _bugRepository;
-        public BugController(IBugRepository bugRepository)
+        private readonly IProjectListRepository _projectListRepository;
+        private readonly IBugTypeRepository _bugTypeRepository;
+
+        public BugController(IBugRepository bugRepository,IProjectListRepository projectList,IBugTypeRepository bugTypeRepository)
         {
             
             _bugRepository = bugRepository;
+            _projectListRepository = projectList;
+            _bugTypeRepository = bugTypeRepository;
         }
         public ActionResult Index()
         {
@@ -27,10 +32,22 @@ namespace bugList.Controllers
         }
 
         // GET: Bug/Create
+
         public ActionResult Create()
         {
-          
-            return View();
+           List <ProjectList> projectlist=_projectListRepository.GetAllProjects();
+            List<BugType> bugTypesList = _bugTypeRepository.GetAllBugsType();
+
+            BugProjectViewModel vm = new BugProjectViewModel()
+            {
+                bug=new Bug(),
+                projectLists = projectlist,
+                bugTypes=bugTypesList
+            };
+
+            return View(vm);
+
+            
             
         }
 
@@ -38,12 +55,17 @@ namespace bugList.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //https://www.davepaquette.com/archive/2015/05/18/mvc6-select-tag-helper.aspx
-        public ActionResult Create(Bug bug,string action)
+        // may have to refactore the code inorder to have both the view of the project  and the bug type 
+        //https://github.com/nashville-software-school/bangazon-inc/blob/cohort-53/book-2-mvc/chapters/VIEW_MODELS.md
+        public ActionResult Create(Bug bug, string action)
         {
+            var projects = _projectListRepository.GetAllProjects();
+            var bugTypes = _bugTypeRepository.GetAllBugsType();
             if (action == "Cancel")
             {
                 return RedirectToAction("Index", "ProjectList");
             }
+
             try
             {
                 _bugRepository.CreateBug(bug);
@@ -53,6 +75,7 @@ namespace bugList.Controllers
             {
                 return View(bug);
             }
+            
         }
 
         // GET: BugController/Edit/5

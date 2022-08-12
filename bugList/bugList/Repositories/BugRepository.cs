@@ -116,7 +116,7 @@ where b.projectId=@id";
                     DbUtils.AddParameter(cmd,"@Description", bug.Description);
                     DbUtils.AddParameter(cmd, "@line", bug.Line);
                     DbUtils.AddParameter(cmd, "@projectId", bug.projectId);
-                    DbUtils.AddParameter(cmd, "@BugTypeId", bug.BugType.Id);
+                    DbUtils.AddParameter(cmd, "@BugTypeId", bug.bugTypeId);
                     DbUtils.AddParameter(cmd, "@Solved", bug.Solved);
                     int id = (int)cmd.ExecuteScalar();
 
