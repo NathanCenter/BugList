@@ -1,4 +1,4 @@
-﻿@model bugList.Models.Bug
+﻿@model bugList.Models.BugProjectViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -15,42 +15,46 @@
             
             
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="bug.Description" class="control-label"></label>
+                <input asp-for="bug.Description" class="form-control" />
+                <span asp-validation-for="bug.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Line" class="control-label"></label>
-                <input asp-for="Line" class="form-control" />
-                <span asp-validation-for="Line" class="text-danger"></span>
+                <label asp-for="bug.Line" class="control-label"></label>
+                <input asp-for="bug.Line" class="form-control" />
+                <span asp-validation-for="bug.Line" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Solved" class="control-label"></label>
-                <input asp-for="Solved" class="form-control" />
-                <span asp-validation-for="Solved" class="text-danger"></span>
+                <label asp-for="bug.Solved" class="control-label"></label>
+                <input asp-for="bug.Solved" class="form-control" />
+                <span asp-validation-for="bug.Solved" class="text-danger"></span>
             </div>
+             <label asp-for="bug.ProjectList" class="control-label"></label>
+              
             <div class="form-group">
-                <label asp-for="projectId" class="control-label"></label>
-                <select asp-for="projectId" >
-                    <option value="1">buglist </option>
-                    <option value="2">pizza app</option>
-                     <option value="3">calculator</option>
-                      <option value="4">qr code poll</option>
-                        </select>
+                <select asp-for="bug.projectId" name="bug.projectId">
+                  @foreach (ProjectList project in Model.projectLists)
+                    {
+                        
+                             <option value="@project.Id">@project.ProjectName</option>
+                            
+                       
+                    }
+                    </select>
             </div>
-      
+       <label asp-for="bug.BugType" class="control-label"></label>
     
              <div class="form-group">
+                 <select asp-for="bug.bugTypeId" name="bug.bugTypeId">
+                  @foreach (BugType bugType in Model.bugTypes)
+                    {
+                        
+                             <option value="@bugType.Id">@bugType.bugType</option>
+                            
+                       
+                    }
+                    </select>
                
-                <label asp-for="BugType" class="control-label"></label>
-                <select asp-for="BugType.Id" >
-
-                    <option value="1">forloop </option>
-                    <option value="2">sntax error</option>
-                     <option value="3">Datebase</option>
-                        </select>
-                
-                <span asp-validation-for="BugType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
