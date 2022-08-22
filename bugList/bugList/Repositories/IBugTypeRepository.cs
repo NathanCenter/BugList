@@ -6,5 +6,6 @@ namespace bugList.Repositories
     public interface IBugTypeRepository
     {
         List<BugType> GetAllBugsType();
+        public void createBugType(BugType bugType);
     }
 }

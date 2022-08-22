@@ -81,12 +81,19 @@ namespace bugList.Controllers
         // GET: BugController/Edit/5
         public ActionResult Edit(int id)
         {
+            List<BugType> bugTypesList = _bugTypeRepository.GetAllBugsType();
             Bug bug = _bugRepository.GetBugById(id);
+            BugProjectViewModel vm = new BugProjectViewModel()
+            {
+               
+            bug = _bugRepository.GetBugById(id),
+            bugTypes = bugTypesList
+            };
             if (bug == null)
             {
                 return NotFound();
             }
-            return View(bug);
+            return View(vm);
         }
 
         // POST: BugController/Edit/5

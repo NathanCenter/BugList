@@ -47,5 +47,22 @@ namespace bugList.Repositories
                 }
             }
         }
+
+        public void createBugType(BugType Type)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Insert Into BugType(BugType) OUTPUT INSERTED.ID VALUES (@bugType)";
+                    DbUtils.AddParameter(cmd, "@bugType", Type.bugType);
+                    int id = (int)cmd.ExecuteScalar();
+
+
+                    Type.Id = id;
+                }
+            }
+        }
     }
 }

@@ -177,7 +177,7 @@ where b.projectId=@id";
                     DbUtils.AddParameter(cmd, "@Line", bug.Line);
                     DbUtils.AddParameter(cmd, "@Solved", bug.Solved);
                     DbUtils.AddParameter(cmd, "@projectId", bug.projectId);
-                    DbUtils.AddParameter(cmd, "@BugTypeId", bug.BugType.Id);
+                    DbUtils.AddParameter(cmd, "@BugTypeId", bug.bugTypeId);
                     DbUtils.AddParameter(cmd,"@Id", bug.Id);
                     cmd.ExecuteNonQuery();
 
