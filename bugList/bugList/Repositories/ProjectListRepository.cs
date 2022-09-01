@@ -28,7 +28,8 @@ namespace bugList.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select Id,UserProfileId,ProgrammingLanguage,projectName from ProjectList";
+                    cmd.CommandText = @"Select pl.Id,pl.UserProfileId, up.Name,pl.ProgrammingLanguage,pl.projectName 
+from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<ProjectList> projects = new List<ProjectList>();
@@ -36,11 +37,13 @@ namespace bugList.Repositories
                         {
                             ProjectList project = new ProjectList
                             {
-                                Id = DbUtils.GetInt(reader, "id"),
-                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                                Id = DbUtils.GetInt(reader, "Id"),
                                 ProgrammingLangueage = DbUtils.GetString(reader, "ProgrammingLanguage"),
                                 ProjectName = DbUtils.GetString(reader, "projectName"),
+                                UserProfileId = DbUtils.GetInt(reader,"UserProfileId"),
+                                UserName = DbUtils.GetString(reader, "Name"),
                             };
+                           
                             projects.Add(project);
                         }
                         return projects;
@@ -50,6 +53,8 @@ namespace bugList.Repositories
 
             }
         }
+
+        // refacter so that it lists the project name by user name.
         public ProjectList GetProjectById(int id)
         {
 

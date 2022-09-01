@@ -117,7 +117,7 @@ namespace bugList.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select Id,Name,UserType,FirbaseUserId,Email from UserProfile Where Id=@Id";
+                    cmd.CommandText = @"Select Id,Name,UserType,Email from UserProfile Where Id=@Id";
                     cmd.Parameters.AddWithValue("@Id", id);
                     UserProfile userProfile = null;
                     var reader = cmd.ExecuteReader();
@@ -125,7 +125,7 @@ namespace bugList.Repositories
                     {
                         userProfile = new UserProfile()
                         {
-                           // Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                           Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Email=reader.GetString(reader.GetOrdinal("Email")),
                            // FirebaseId=reader.GetString(reader.GetOrdinal("FirbaseUserId")),
                             Name=reader.GetString(reader.GetOrdinal("Name")),
