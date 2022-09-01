@@ -12,16 +12,18 @@ namespace bugList.Controllers
         // GET: ProjectListController
         private readonly IProjectListRepository _projectListRepository;
         private readonly IBugRepository _bugRepository;
-
+        private readonly IUserProfileRepository _userProfileRepository;
    
-        public ProjectListController(IProjectListRepository projectListRepository,IBugRepository bugRepository) {
+        public ProjectListController(IProjectListRepository projectListRepository,IBugRepository bugRepository,IUserProfileRepository userProfileRepository) {
             _projectListRepository = projectListRepository;
             _bugRepository = bugRepository;
+            _userProfileRepository = userProfileRepository;
         }
        
         public ActionResult Index()
         {
             List<ProjectList> projects = _projectListRepository.GetAllProjects();
+            
             return View(projects);
         }
 
@@ -41,7 +43,16 @@ namespace bugList.Controllers
         // GET: ProjectListController/Create
         public ActionResult Create()
         {
-            return View();
+            List<ProjectList> projectlist = _projectListRepository.GetAllProjects();
+            List<UserProfile> userList=_userProfileRepository.GetAll();
+
+            UserProjectViewModel up = new UserProjectViewModel()
+            {
+                
+                projectLists = projectlist,
+                Names = userList
+            };
+            return View(up);
         }
 
         // POST: ProjectListController/Create
@@ -52,6 +63,7 @@ namespace bugList.Controllers
             try
             {
                 _projectListRepository.CreateProject(project);
+               
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -91,17 +103,18 @@ namespace bugList.Controllers
         public ActionResult Delete(int id)
         {
             ProjectList projects = _projectListRepository.GetProjectById(id);
+          
             return View(projects);
         }
 
         // POST: ProjectListController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, ProjectList project)
+        public ActionResult Delete(int id, int userId, ProjectList project)
         {
             try
             {
-                _projectListRepository.Delete(id);
+                _projectListRepository.Delete(id,userId);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
