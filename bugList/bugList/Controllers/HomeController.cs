@@ -22,7 +22,7 @@ namespace bugList.Controllers
 
         public IActionResult Index()
         {
-           List<UserProfile> users = _userProfileRepository.GetAll();
+            List<UserProfile> users = _userProfileRepository.GetAll();
 
             return View(users);
         }

@@ -34,13 +34,14 @@ namespace bugList.Repositories
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
                     UserProfile userProfile = null;
                     var reader = cmd.ExecuteReader();
-                    if (reader.Read()) {
+                    if (reader.Read())
+                    {
                         userProfile = new UserProfile()
                         {
-                            Id=DbUtils.GetInt(reader, "Id"),
-                            Name=DbUtils.GetString(reader, "Name"),
-                            Email=DbUtils.GetString(reader, "Email"),  
-                            UserType=DbUtils.GetString(reader, "userType"),
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            UserType = DbUtils.GetString(reader, "userType"),
                             FirebaseId = DbUtils.GetString(reader, "FirebaseUserId")
                         };
                     }
@@ -51,15 +52,14 @@ namespace bugList.Repositories
             }
         }
 
-        public void Add(UserProfile userProfile,string localId)
+        public void Add(UserProfile userProfile, string localId)
         {
-            using (var conn = Connection) 
+            using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO UserProfile (Name,FirebaseUserId,UserType,Email)  OUTPUT INSERTED.Id VALUES (@Name,@FirebaseUserId,@UserType,@Email)";
-
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", localId);
                     DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
                     DbUtils.AddParameter(cmd, "@UserType", userProfile.UserType);
@@ -82,33 +82,29 @@ namespace bugList.Repositories
 
         public List<UserProfile> GetAll()
         {
-            using (var conn = Connection) 
+            using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"Select Id,Name,UserType,FirebaseUserId,Email from UserProfile";
                     var reader = cmd.ExecuteReader();
-                    var users=new List<UserProfile>();
+                    var users = new List<UserProfile>();
                     while (reader.Read())
-                        users.Add(new UserProfile 
+                        users.Add(new UserProfile
                         {
-                            Id = DbUtils.GetInt(reader,"id"),
-                            Name = DbUtils.GetString(reader,"name"),
+                            Id = DbUtils.GetInt(reader, "id"),
+                            Name = DbUtils.GetString(reader, "name"),
                             FirebaseId = DbUtils.GetString(reader, "FirebaseUserId"),
                             Email = DbUtils.GetString(reader, "Email"),
-                            UserType=DbUtils.GetString(reader, "UserType")
+                            UserType = DbUtils.GetString(reader, "UserType")
 
                         });
                     reader.Close();
                     return users;
-
-                    
                 }
             }
         }
-
-    
 
         public UserProfile GetById(int id)
         {
@@ -121,22 +117,20 @@ namespace bugList.Repositories
                     cmd.Parameters.AddWithValue("@Id", id);
                     UserProfile userProfile = null;
                     var reader = cmd.ExecuteReader();
-                    if (reader.Read()) 
+                    if (reader.Read())
                     {
                         userProfile = new UserProfile()
                         {
-                           Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Email=reader.GetString(reader.GetOrdinal("Email")),
-                           // FirebaseId=reader.GetString(reader.GetOrdinal("FirbaseUserId")),
-                            Name=reader.GetString(reader.GetOrdinal("Name")),
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Email = reader.GetString(reader.GetOrdinal("Email")),
+                            // FirebaseId=reader.GetString(reader.GetOrdinal("FirbaseUserId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
                             //UserType = reader.GetString(reader.GetOrdinal("UserType")),
                         };
                     }
                     reader.Close();
                     return userProfile;
-
                 }
-
             }
         }
     }

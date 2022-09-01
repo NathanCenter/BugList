@@ -11,7 +11,8 @@ namespace bugList.Controllers
         // GET: BugTypeController
         private readonly IBugTypeRepository _bugTypeRepository;
 
-        public BugTypeController(IBugTypeRepository bugTypeRepository) {
+        public BugTypeController(IBugTypeRepository bugTypeRepository)
+        {
             _bugTypeRepository = bugTypeRepository;
         }
         public ActionResult Index()
@@ -28,9 +29,9 @@ namespace bugList.Controllers
         // GET: BugTypeController/Create
         public ActionResult Create()
         {
-            
-            
-            
+
+
+
             return View();
         }
 

@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <p>
-    <p>
+<p>
 
     <button onclick="location.href='@Url.Action("Create", "Bug")'">Create New</button>
 </p>
@@ -27,38 +27,39 @@
             <th>
                 @Html.DisplayNameFor(model => model.Solved)
             </th>
-          
-             <th>
+
+            <th>
                 @Html.DisplayNameFor(model => model.BugType)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Line)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Solved)
-            </td>
-            
-             <td>
-                
-                @Html.DisplayFor(modelItem => item.BugType.bugType)
-            </td>
-            <td>
-               @Html.ActionLink("Edit", "Edit","Bug", new {  id=item.Id  }) |
-               @Html.ActionLink("Delete","Delete","Bug", new { id=item.Id })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Line)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Solved)
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.BugType.bugType)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit","Bug", new {  id=item.Id  }) |
+                    @Html.ActionLink("Delete","Delete","Bug", new { id=item.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

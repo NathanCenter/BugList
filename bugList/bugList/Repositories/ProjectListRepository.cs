@@ -40,10 +40,10 @@ from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
                                 Id = DbUtils.GetInt(reader, "Id"),
                                 ProgrammingLangueage = DbUtils.GetString(reader, "ProgrammingLanguage"),
                                 ProjectName = DbUtils.GetString(reader, "projectName"),
-                                UserProfileId = DbUtils.GetInt(reader,"UserProfileId"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
                                 UserName = DbUtils.GetString(reader, "Name"),
                             };
-                           
+
                             projects.Add(project);
                         }
                         return projects;
@@ -80,7 +80,7 @@ from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
                             };
                             return project;
                         }
-                        else 
+                        else
                         {
                             return null;
                         }
@@ -88,10 +88,10 @@ from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
 
                 }
             }
-            
-         }
-        
-        public void  CreateProject(ProjectList project)
+
+        }
+
+        public void CreateProject(ProjectList project)
         {
             using (SqlConnection conn = Connection)
             {
@@ -101,7 +101,7 @@ from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
                     cmd.CommandText = @"Insert Into ProjectList (UserProfileId,ProgrammingLanguage,ProjectName) 
             OUTPUT INSERTED.ID VALUES (@UserProfileId,@ProgrammingLanguage,@ProjectName)";
 
-                    
+
                     cmd.Parameters.AddWithValue("@UserProfileId", project.UserProfileId);
                     cmd.Parameters.AddWithValue("@ProgrammingLanguage", project.ProgrammingLangueage);
                     cmd.Parameters.AddWithValue("@ProjectName", project.ProjectName);
@@ -115,14 +115,14 @@ from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
 
 
             }
-           
+
         }
         public void Delete(int projectId)
         {
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand()) 
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
                             DELETE FROM 
@@ -133,10 +133,10 @@ from ProjectList pl left join  UserProfile up on pl.UserProfileId=up.Id";
 
                     cmd.ExecuteNonQuery();
                 }
-            
+
             }
         }
-        
+
         public void Edit(ProjectList project)
         {
             using (SqlConnection conn = Connection)

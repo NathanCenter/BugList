@@ -25,7 +25,6 @@ namespace bugList.Repositories
         {
             using (var conn = Connection)
             {
-
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
@@ -37,7 +36,7 @@ namespace bugList.Repositories
                         {
                             BugType bugTypeList = new BugType()
                             {
-                                Id= DbUtils.GetInt(reader, "id"),
+                                Id = DbUtils.GetInt(reader, "id"),
                                 bugType = DbUtils.GetString(reader, "BugType"),
                             };
                             bugType.Add(bugTypeList);
@@ -58,8 +57,6 @@ namespace bugList.Repositories
                     cmd.CommandText = @"Insert Into BugType(BugType) OUTPUT INSERTED.ID VALUES (@bugType)";
                     DbUtils.AddParameter(cmd, "@bugType", Type.bugType);
                     int id = (int)cmd.ExecuteScalar();
-
-
                     Type.Id = id;
                 }
             }
