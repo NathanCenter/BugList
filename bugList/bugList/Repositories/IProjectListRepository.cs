@@ -5,7 +5,7 @@ namespace bugList.Repositories
 {
     public interface IProjectListRepository
     {
-         List<ProjectList> GetAllProjects();
+        List<ProjectList> GetAllProjects();
         public ProjectList GetProjectById(int id);
 
         public void CreateProject(ProjectList project);

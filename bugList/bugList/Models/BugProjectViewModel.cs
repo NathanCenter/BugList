@@ -7,6 +7,6 @@ namespace bugList.Models
         public Bug bug { get; set; }
         public List<ProjectList> projectLists { get; set; }
         public List<BugType> bugTypes { get; set; }
-        
+
     }
 }

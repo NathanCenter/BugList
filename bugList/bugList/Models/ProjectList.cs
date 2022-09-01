@@ -10,6 +10,6 @@ namespace bugList.Models
         public string ProjectName { get; set; }
         public string UserName { get; set; }
 
-        
+
     }
 }

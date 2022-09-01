@@ -17,9 +17,9 @@ namespace bugList.Models
         public BugType BugType { get; set; }
         public ProjectList ProjectList { get; set; }
 
-      
-       
+
+
 
     }
-   
+
 }

@@ -43,10 +43,10 @@ namespace bugList.Repositories
                                 Solved = DbUtils.GetString(reader, "Solved"),
 
                             };
-                            BugType bugType = new BugType() 
+                            BugType bugType = new BugType()
                             {
                                 Id = DbUtils.GetInt(reader, "id"),
-                                bugType=DbUtils.GetString(reader, "bugType"),
+                                bugType = DbUtils.GetString(reader, "bugType"),
 
                             };
 
@@ -86,14 +86,14 @@ where b.projectId=@id";
                                 Description = DbUtils.GetString(reader, "description"),
                                 Line = DbUtils.GetString(reader, "line"),
                                 Solved = DbUtils.GetString(reader, "Solved"),
-                            BugType= new BugType() 
+                                BugType = new BugType()
                                 {
                                     Id = DbUtils.GetInt(reader, "id"),
                                     bugType = DbUtils.GetString(reader, "BugType"),
                                 }
 
                             };
-                       
+
                             bugDetails.Add(bugList);
                         }
                         return bugDetails;
@@ -102,7 +102,7 @@ where b.projectId=@id";
             }
         }
 
-     
+
         public void CreateBug(Bug bug)
         {
             using (SqlConnection conn = Connection)
@@ -112,8 +112,8 @@ where b.projectId=@id";
                 {
                     cmd.CommandText = @"Insert Into Bug (Description,Line,projectId,BugTypeId,Solved) OUTPUT INSERTED.ID VALUES
 (@Description,@line,@projectId,@BugTypeId,@Solved)";
-                    
-                    DbUtils.AddParameter(cmd,"@Description", bug.Description);
+
+                    DbUtils.AddParameter(cmd, "@Description", bug.Description);
                     DbUtils.AddParameter(cmd, "@line", bug.Line);
                     DbUtils.AddParameter(cmd, "@projectId", bug.projectId);
                     DbUtils.AddParameter(cmd, "@BugTypeId", bug.bugTypeId);
@@ -151,8 +151,8 @@ where b.projectId=@id";
                                     Id = DbUtils.GetInt(reader, "BugTypeId")
 
                                 }
-                               
-                        };
+
+                            };
                             return bug;
 
                         }
@@ -165,7 +165,7 @@ where b.projectId=@id";
                 }
             }
         }
-        public void EditBug(Bug bug) 
+        public void EditBug(Bug bug)
         {
             using (SqlConnection conn = Connection)
             {
@@ -178,7 +178,7 @@ where b.projectId=@id";
                     DbUtils.AddParameter(cmd, "@Solved", bug.Solved);
                     DbUtils.AddParameter(cmd, "@projectId", bug.projectId);
                     DbUtils.AddParameter(cmd, "@BugTypeId", bug.bugTypeId);
-                    DbUtils.AddParameter(cmd,"@Id", bug.Id);
+                    DbUtils.AddParameter(cmd, "@Id", bug.Id);
                     cmd.ExecuteNonQuery();
 
                 }
@@ -201,4 +201,3 @@ where b.projectId=@id";
         }
     }
 }
-  

@@ -37,13 +37,9 @@ namespace bugList.Auth
         public async Task<IActionResult> Register(UserProfile UserProfile)
         {
             //create the user
-            await auth.CreateUserWithEmailAndPasswordAsync(UserProfile.Email, UserProfile.Password,UserProfile.FirebaseId);
-
-
-            
-            //log in the new user
+            await auth.CreateUserWithEmailAndPasswordAsync(UserProfile.Email, UserProfile.Password, UserProfile.FirebaseId);            //log in the new user
             var fbAuthLink = await auth
-                            .SignInWithEmailAndPasswordAsync(UserProfile.Email, UserProfile.Password);
+             .SignInWithEmailAndPasswordAsync(UserProfile.Email, UserProfile.Password);
             string token = fbAuthLink.FirebaseToken;
             string localId = fbAuthLink.User.LocalId;
             //var authData = auth.LinkAccountsAsync(UserProfile.Email, UserProfile.Password, UserProfile.FirebaseId);
@@ -51,13 +47,11 @@ namespace bugList.Auth
             //saving the token in a session variable
             if (token != null)
             {
-                
-                HttpContext.Session.SetString("_UserToken", token);
-                _userProfileRepository.Add(UserProfile,localId);
-                
 
+                HttpContext.Session.SetString("_UserToken", token);
+                _userProfileRepository.Add(UserProfile, localId);
                 return RedirectToAction("Index", "ProjectList");
-               
+
             }
             else
             {
@@ -93,8 +87,6 @@ namespace bugList.Auth
         public ActionResult Index()
         {
             return View();
-
-
         }
 
         // GET: UserProfileController/Details/5

@@ -12,17 +12,16 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           <div class="form-group">
-               <label asp-for="Names" class="control-label"></label>
+            <div class="form-group">
+                <label asp-for="Names" class="control-label"></label>
                 <select asp-for="project.UserProfileId" name="project.UserProfileId">
-                  @foreach (UserProfile Name in Model.Names)
+                    @foreach (UserProfile Name in Model.Names)
                     {
-                        
-                             <option value="@Name.Id">@Name.Name</option>
-                            
-                       
+
+                        <option value="@Name.Id">@Name.Name</option>
+
                     }
-                    </select>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="project.ProgrammingLangueage" class="control-label"></label>
@@ -46,5 +45,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

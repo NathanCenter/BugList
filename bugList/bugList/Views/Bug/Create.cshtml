@@ -12,8 +12,8 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            
+
+
             <div class="form-group">
                 <label asp-for="bug.Description" class="control-label"></label>
                 <input asp-for="bug.Description" class="form-control" />
@@ -29,36 +29,36 @@
                 <input asp-for="bug.Solved" class="form-control" />
                 <span asp-validation-for="bug.Solved" class="text-danger"></span>
             </div>
-             <label asp-for="bug.ProjectList" class="control-label"></label>
-              
+            <label asp-for="bug.ProjectList" class="control-label"></label>
+
             <div class="form-group">
                 <select asp-for="bug.projectId" name="bug.projectId">
-                  @foreach (ProjectList project in Model.projectLists)
+                    @foreach (ProjectList project in Model.projectLists)
                     {
-                        
-                             <option value="@project.Id">@project.ProjectName</option>
-                            
-                       
+
+                        <option value="@project.Id">@project.ProjectName</option>
+
+
                     }
-                    </select>
+                </select>
             </div>
-       <label asp-for="bug.BugType" class="control-label"></label>
-    
-             <div class="form-group">
-                 <select asp-for="bug.bugTypeId" name="bug.bugTypeId">
-                  @foreach (BugType bugType in Model.bugTypes)
+            <label asp-for="bug.BugType" class="control-label"></label>
+
+            <div class="form-group">
+                <select asp-for="bug.bugTypeId" name="bug.bugTypeId">
+                    @foreach (BugType bugType in Model.bugTypes)
                     {
-                        
-                             <option value="@bugType.Id">@bugType.bugType</option>
-                            
-                       
+
+                        <option value="@bugType.Id">@bugType.bugType</option>
+
+
                     }
-                    </select>
-               
+                </select>
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
-                         <input type='submit' value='Cancel' name='action'onclick="location.href='@Url.Action("Index", "ProjectList")'" />
+                <input type='submit' value='Cancel' name='action' onclick="location.href='@Url.Action("Index", "ProjectList")'" />
             </div>
         </form>
     </div>
@@ -66,5 +66,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
