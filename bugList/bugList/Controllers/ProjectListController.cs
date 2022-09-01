@@ -110,11 +110,11 @@ namespace bugList.Controllers
         // POST: ProjectListController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, int userId, ProjectList project)
+        public ActionResult Delete(int id, ProjectList project)
         {
             try
             {
-                _projectListRepository.Delete(id,userId);
+                _projectListRepository.Delete(id);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

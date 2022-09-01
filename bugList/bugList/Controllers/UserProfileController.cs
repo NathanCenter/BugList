@@ -87,8 +87,6 @@ namespace bugList.Auth
         public ActionResult Index()
         {
             return View();
-
-
         }
 
         // GET: UserProfileController/Details/5
